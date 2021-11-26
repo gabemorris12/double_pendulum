@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
+from scipy.integrate import odeint
 
 # Parameters
 h = 0.05  # time step
@@ -34,18 +35,8 @@ def state_variables(x, t):
     ])
 
 
-theta_2 = np.zeros(time.size)
-theta_3 = np.zeros(time.size)
-theta_2_dot = np.zeros(time.size)
-theta_3_dot = np.zeros(time.size)
-theta_2[0], theta_3[0], theta_2_dot[0], theta_3_dot[0] = ics
-
-for i in range(time.size - 1):
-    d = state_variables((theta_2[i], theta_3[i], theta_2_dot[i], theta_3_dot[i]), time[i])
-    theta_2[i + 1] = theta_2[i] + d[0]*h
-    theta_3[i + 1] = theta_3[i] + d[1]*h
-    theta_2_dot[i + 1] = theta_2_dot[i] + d[2]*h
-    theta_3_dot[i + 1] = theta_3_dot[i] + d[3]*h
+sol = odeint(state_variables, ics, time)
+theta_2, theta_3 = np.array(sol[:, 0]), np.array(sol[:, 1])
 
 A_points = l2*np.exp(1j*theta_2)
 B_points = l3*np.exp(1j*theta_3) + A_points
