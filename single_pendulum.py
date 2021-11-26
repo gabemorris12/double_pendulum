@@ -52,16 +52,19 @@ ax.grid()
 
 
 line = ax.plot([], [], color='maroon', marker='o')[0]
+stamp = ax.text(0.05, 0.9, '', transform=ax.transAxes)
 
 
 def init():
     line.set_data([], [])
-    return [line, ]
+    stamp.set_text('')
+    return [line, stamp]
 
 
 def animate(index):
     line.set_data([0, Ax[index]], [0, Ay[index]])
-    return [line, ]
+    stamp.set_text(f'{time[index]:0.3f}')
+    return [line, stamp]
 
 
 # noinspection PyTypeChecker
