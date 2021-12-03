@@ -6,7 +6,7 @@ from scipy.integrate import odeint
 # Parameters
 h = 0.05  # time step
 time = np.arange(0, 20, h)  # Time interval
-ics = (0, 0, 0, 0)  # Initial conditions theta_2, theta_3, theta_2_dot, theta_3_dot
+ics = (0, 0, 0, 0)  # Initial conditions' theta_2, theta_3, theta_2_dot, theta_3_dot
 m2, m3 = 5, 3  # in kilograms
 I2, I3 = 1, 1  # in kg m^2
 l2, l3 = 0.5, 0.25  # in m
