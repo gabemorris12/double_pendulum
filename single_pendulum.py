@@ -52,7 +52,7 @@ ax.grid()
 
 
 line = ax.plot([], [], color='maroon', marker='o')[0]
-stamp = ax.text(0.05, 0.9, '', transform=ax.transAxes)
+stamp = ax.text(0.05, 0.9, '', transform=ax.transAxes, bbox=dict(facecolor='white', edgecolor='white'))
 
 
 def init():
@@ -70,3 +70,5 @@ def animate(index):
 # noinspection PyTypeChecker
 ani = FuncAnimation(fig, animate, frames=range(time.size), interval=50, blit=True, init_func=init)
 plt.show()
+
+# ani.save('animations/single_pendulum.mp4', dpi=300)
