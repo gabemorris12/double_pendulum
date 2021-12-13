@@ -10,7 +10,7 @@ ics = (np.pi/2.01, np.pi/2.01, 0, 0)  # Initial conditions' theta_2, theta_3, th
 m2, m3 = 5, 3  # in kilograms
 I2, I3 = 1, 1  # in kg m^2
 l2, l3 = 0.5, 0.25  # in m
-T12 = lambda t: 0  # input torque
+T12 = lambda t: 8*np.sin(2*np.pi*0.2*t)*np.exp(-0.1*t) - 1.5  # input torque
 
 w2, w3 = 9.8*m2, 9.8*m3
 
@@ -47,7 +47,10 @@ By = np.imag(B_points)
 cushion = 0.1
 s = l2 + l3
 
-fig, ax = plt.subplots()
+fig, (ax, ax2) = plt.subplots(nrows=1, ncols=2)
+fig.canvas.manager.window.wm_geometry("+0+0")
+fig.set_size_inches(14, 7)
+
 ax.set_aspect('equal')
 ax.set_xlim(-s - cushion, s + cushion)
 ax.set_ylim(-s - cushion, s + cushion)
@@ -55,9 +58,9 @@ ax.grid()
 
 links = [ax.plot([], [], color='maroon', marker='o')[0], ax.plot([], [], color='deepskyblue', marker='o')[0],
          ax.text(0.05, 0.9, '', transform=ax.transAxes, bbox=dict(facecolor='white', edgecolor='white')),
-         ax.plot([], [], color='black', marker='o', ms=2)[0]]
+         ax.plot([], [], color='black', marker='o', ms=2)[0], ax2.scatter([], [], color='deepskyblue')]
 
-f = 5  # The size of the tail
+f = 10  # The size of the tail
 
 
 def init():
@@ -65,6 +68,12 @@ def init():
     links[1].set_data([], [])
     links[2].set_text('')
     links[3].set_data([], [])
+    links[4].set_offsets([(time[0], T12(time[0]))])
+
+    ax2.set_title('Input Torque')
+    ax2.plot(time, T12(time), color='maroon')
+    ax2.set_xlabel('Time (s)')
+    ax2.grid()
     return links
 
 
@@ -72,6 +81,7 @@ def animate(index):
     links[0].set_data([0, Ax[index]], [0, Ay[index]])
     links[1].set_data([Ax[index], Bx[index]], [Ay[index], By[index]])
     links[2].set_text(f'{time[index]:.3f}')
+    links[4].set_offsets([(time[index], T12(time[index]))])
 
     if index < f:
         links[3].set_data(Bx[:index], By[:index])
