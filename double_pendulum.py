@@ -95,4 +95,4 @@ def animate(index):
 ani = FuncAnimation(fig, animate, frames=range(time.size), interval=50, blit=True, init_func=init)
 plt.show()
 
-# ani.save('animations/double_pendulum.mp4', dpi=300)
+# ani.save('animations/double_pendulum_input_torque.mp4', dpi=300)
