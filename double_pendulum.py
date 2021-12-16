@@ -55,6 +55,7 @@ ax.set_aspect('equal')
 ax.set_xlim(-s - cushion, s + cushion)
 ax.set_ylim(-s - cushion, s + cushion)
 ax.grid()
+ax2.grid()
 
 links = [ax.plot([], [], color='maroon', marker='o')[0], ax.plot([], [], color='deepskyblue', marker='o')[0],
          ax.text(0.05, 0.9, '', transform=ax.transAxes, bbox=dict(facecolor='white', edgecolor='white')),
@@ -73,7 +74,6 @@ def init():
     ax2.set_title('Input Torque')
     ax2.plot(time, T12(time), color='maroon')
     ax2.set_xlabel('Time (s)')
-    ax2.grid()
     return links
 
 
